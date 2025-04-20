@@ -4,16 +4,6 @@ const UserSchema = new mongoose.Schema( //{
   // password: { type: String, required: true },
   //}
   {
-    studentId: {
-      type: String,
-      //required: true,
-      unique: true,
-    },
-    username: {
-      type: String,
-      unique: true,
-      sparse: true, // Allows multiple nulls but enforces uniqueness for actual values
-    },
     email: {
       type: String,
       //required: true,
