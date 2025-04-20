@@ -7,14 +7,16 @@ const User = require("../models/user.js"); // ⬅️ This was wrong in your code
 router.post("/signup", async (req, res) => {
   const { email, password } = req.body;
   console.log(email);
-  if (email || password) {
-    return res.status(400).json({
-      status: "fail",
-      message: "Please fill all required fields.",
-    });
-  }
+  // if (email || password) {
+  //   return res.status(400).json({
+  //     status: "fail",
+  //     message: "Please fill all required fields.",
+  //   });
+  // }
+
   try {
     let user = await User.findOne({ email });
+    console.log(user);
     if (user) return res.status(400).send("User already exists");
 
     const hashedPassword = await bcrypt.hash(password, 10);
