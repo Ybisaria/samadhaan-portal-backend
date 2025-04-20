@@ -73,16 +73,24 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const nodemailer = require("nodemailer");
-const dotenv = require("dotenv");
 const Complaint = require("../models/complaint");
 
-// Load environment variables
-dotenv.config();
+// Get email and password from command-line arguments
+const email = process.argv
+  .find((arg) => arg.startsWith("--email="))
+  ?.split("=")[1];
+const password = process.argv
+  .find((arg) => arg.startsWith("--password="))
+  ?.split("=")[1];
 
-// Multer setup
+if (!email || !password) {
+  throw new Error("Email and password are required as command-line arguments.");
+}
+
+// 📂 Multer setup for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/"); // make sure this folder exists
+    cb(null, "uploads/"); // Make sure this folder exists
   },
   filename: function (req, file, cb) {
     const uniqueName = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -92,19 +100,20 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Nodemailer transporter
+// 📧 Nodemailer transporter setup using command-line arguments
 const transporter = nodemailer.createTransport({
   service: "Gmail",
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: email, // Email from command-line argument
+    pass: password, // Password from command-line argument
   },
 });
 
-// POST route to handle complaints
+// 📬 POST route to handle complaint submission
 router.post("/", upload.single("proof"), async (req, res) => {
   console.log("Form Data Received:", req.body);
   console.log("File Info:", req.file);
+
   try {
     const {
       category,
@@ -116,12 +125,13 @@ router.post("/", upload.single("proof"), async (req, res) => {
       academicSemester,
       academicDesc,
       otherDesc,
-      email,
+      userEmail,
     } = req.body;
 
+    // 📦 Build complaint data
     const complaintData = {
       category,
-      email,
+      email: userEmail,
       proofFileName: req.file?.filename || "",
     };
 
@@ -138,16 +148,22 @@ router.post("/", upload.single("proof"), async (req, res) => {
       complaintData.otherDesc = otherDesc;
     }
 
-    // Save to database
+    // 💾 Save to database
     const complaint = new Complaint(complaintData);
     await complaint.save();
 
-    // Email to user
+    // 📤 Email confirmation to user
     const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
+      from: email, // From the email passed in the command-line arguments
+      to: userEmail,
       subject: "Complaint Received",
-      text: `Hello,\n\nWe have received your complaint under the category: ${category}.\nWe appreciate you reaching out and will get back to you soon.\n\nBest regards,\nComplaint Desk`,
+      text: `Hello,
+
+We have received your complaint under the category: ${category}.
+We appreciate you reaching out and will get back to you soon.
+
+Best regards,
+Complaint Desk`,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {

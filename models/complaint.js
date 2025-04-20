@@ -95,54 +95,72 @@
 // );
 // module.exports = mongoose.model("complaint", ComplaintSchema);
 
+// const mongoose = require("mongoose");
+
+// const complaintSchema = new mongoose.Schema({
+//   category: {
+//     type: String,
+//     required: true,
+//     enum: [
+//       "Teacher Issues",
+//       "Discipline Issues",
+//       "Library Complaints",
+//       "Infrastructure Issues",
+//       "Academic Issues",
+//       "Hostel Complaints",
+//       "General Grievances",
+//     ],
+//   },
+
+//   // Common to Teacher & Academic
+//   course: String,
+//   semester: String,
+
+//   // Teacher-specific
+//   teacherName: String,
+//   teacherIssueDesc: String,
+
+//   // Academic-specific
+//   academicDesc: String,
+
+//   // General issues
+//   otherDesc: String,
+
+//   email: {
+//     type: String,
+//     required: true,
+//   },
+
+//   proofFileName: String, // saved filename from multer
+
+//   createdAt: {
+//     type: Date,
+//     default: Date.now,
+//   },
+
+//   status: {
+//     type: String,
+//     default: "Pending",
+//     enum: ["Pending", "In Progress", "Resolved", "Rejected"],
+//   },
+// });
+
+// module.exports = mongoose.model("Complaint", complaintSchema);
 const mongoose = require("mongoose");
 
-const complaintSchema = new mongoose.Schema({
-  category: {
-    type: String,
-    required: true,
-    enum: [
-      "Teacher Issues",
-      "Discipline Issues",
-      "Library Complaints",
-      "Infrastructure Issues",
-      "Academic Issues",
-      "Hostel Complaints",
-      "General Grievances",
-    ],
+const complaintSchema = new mongoose.Schema(
+  {
+    category: String,
+    email: String,
+    teacherName: String,
+    course: String,
+    semester: String,
+    teacherIssueDesc: String,
+    academicDesc: String,
+    otherDesc: String,
+    proofFileName: String,
   },
-
-  // Common to Teacher & Academic
-  course: String,
-  semester: String,
-
-  // Teacher-specific
-  teacherName: String,
-  teacherIssueDesc: String,
-
-  // Academic-specific
-  academicDesc: String,
-
-  // General issues
-  otherDesc: String,
-
-  email: {
-    type: String,
-    required: true,
-  },
-
-  proofFileName: String, // saved filename from multer
-
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-
-  status: {
-    type: String,
-    default: "Pending",
-    enum: ["Pending", "In Progress", "Resolved", "Rejected"],
-  },
-});
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("Complaint", complaintSchema);
