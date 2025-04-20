@@ -3,5 +3,5 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
 });
-module.exports = mongoose.model("user", UserSchema);
+module.exports = mongoose.model("user", UserSchema, "users2"); //change made here and added "user2"
 //
