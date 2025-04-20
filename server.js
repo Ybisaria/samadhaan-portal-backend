@@ -17,7 +17,7 @@ app.use(
     saveUninitialized: true,
     store: MongoStore.create({
       mongoUrl:
-        "mongodb+srv://yashbisaria1:yashbisaria1@cluster0.nowe0ga.mongodb.net/samadhan_db?retryWrites=true&w=majority&appName=Cluster0",
+        "mongodb+srv://guptatejasv86086:IHiNa09sVQaCgM9N@cluster0.6etxq2u.mongodb.net/InvertisCare_db?retryWrites=true&w=majority&appName=Cluster0",
     }),
   })
 );
