@@ -45,7 +45,7 @@ router.post("/login", async (req, res) => {
     if (!isMatch) return res.status(400).send("Invalid credentials");
 
     req.session.user = user;
-    res.redirect("/home.html"); // ⬅️ You had `res.redirect = "/home.html";` (wrong syntax)
+    res.redirect("https://invertisportalsamadhan.netlify.app/home.html"); // ⬅️ You had `res.redirect = "/home.html";` (wrong syntax)
   } catch (err) {
     console.error("Login error:", err); // Add error logging
     res.status(500).send("Server error");
