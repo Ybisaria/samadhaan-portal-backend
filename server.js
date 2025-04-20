@@ -5,9 +5,12 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/auth");
+const cors = require("cors");
 
 const app = express();
 connectDB();
+app.use(express.json()); // For JSON bodies
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
