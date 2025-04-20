@@ -1,5 +1,6 @@
 const express = require("express");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const path = require("path");
 const bodyParser = require("body-parser");
 const connectDB = require("./config/db");
@@ -14,6 +15,10 @@ app.use(
     secret: "samadhanSecret",
     resave: false,
     saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl:
+        "mongodb+srv://yashbisaria1:yashbisaria1@cluster0.nowe0ga.mongodb.net/",
+    }),
   })
 );
 
