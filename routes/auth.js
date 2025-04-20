@@ -23,7 +23,7 @@ router.post("/signup", async (req, res) => {
     user = new User({ email, password: hashedPassword });
     await user.save();
 
-    res.redirect("/login.html");
+    res.redirect("https://invertisportalsamadhan.netlify.app//login.html");
   } catch (err) {
     console.error("Signup error:", err); // Add error logging
     res.status(500).send("Server error");
