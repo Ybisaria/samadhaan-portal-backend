@@ -24,7 +24,7 @@ const ComplaintSchema = new mongoose.Schema(
     },
     teacherName: {
       type: String,
-      required: trusted,
+      //required: trusted,
     },
 
     // assignedTo: {
