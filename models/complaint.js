@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const ComplaintSchema = new mongoose.Schema(
   {
     studentRefId: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
     subject: {
